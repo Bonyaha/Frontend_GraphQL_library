@@ -34,7 +34,7 @@ const Authors = ({ authors }) => {
 
 	return (
 		<div>
-			<h2>authors</h2>
+			<h2>Authors</h2>
 			<table>
 				<tbody>
 					<tr>
@@ -53,7 +53,7 @@ const Authors = ({ authors }) => {
 			</table>
 			<div>
 				<form onSubmit={submit} className="form-container">
-					<h2>Set BirthYear</h2>
+					<h3>Set BirthYear</h3>
 					<div className="form-group">
 						<label>Select an author:</label>
 						<Select
