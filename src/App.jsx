@@ -29,7 +29,7 @@ const App = () => {
       </div>
 
       <Routes>
-        <Route path="/add" element={<NewBook />} />
+        <Route path="/add" element={<NewBook authors={result.data.allAuthors} />} />
         <Route path="/books" element={<Books />} />
         <Route path="/" element={<Authors authors={result.data.allAuthors} />} />
       </Routes>

@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
+import Select from 'react-select'
 import { ADD_BOOK, ALL_BOOKS } from '../queries'
 
 const NewBook = (props) => {
@@ -33,23 +34,23 @@ const NewBook = (props) => {
 
 	return (
 		<div>
-			<form onSubmit={submit}>
-				<div>
-					title
+			<form onSubmit={submit} className="form-container">
+				<div className="form-group">
+					<label>Title:</label>
 					<input
 						value={title}
 						onChange={({ target }) => setTitle(target.value)}
 					/>
 				</div>
-				<div>
-					author
+				<div className="form-group">
+					<label>Author:</label>
 					<input
 						value={author}
 						onChange={({ target }) => setAuthor(target.value)}
 					/>
 				</div>
-				<div>
-					published
+				<div className="form-group">
+					<label>Published:</label>
 					<input
 						type="number"
 						value={published}
@@ -61,15 +62,20 @@ const NewBook = (props) => {
 						value={genre}
 						onChange={({ target }) => setGenre(target.value)}
 					/>
-					<button onClick={addGenre} type="button">
+					<button onClick={addGenre} type="button" className="genre-button">
 						add genre
 					</button>
 				</div>
 				<div>genres: {genres.join(' ')}</div>
-				<button type="submit">create book</button>
+				<button type="submit" className="submit-button">create book</button>
 			</form>
 		</div>
 	)
 }
 
 export default NewBook
+
+
+
+
+
