@@ -62,7 +62,6 @@ const Authors = ({ authors }) => {
 							onChange={selectedOption => setSelectedAuthor(selectedOption)}
 							placeholder="Select an author"
 							className="select-input"
-							classNamePrefix="select-input"
 						/>
 					</div>
 					<div className="form-group">
