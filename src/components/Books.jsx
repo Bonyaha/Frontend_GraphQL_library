@@ -6,10 +6,9 @@ const Books = () => {
 	const [selectedGenre, setSelectedGenre] = useState('')
 	const [allGenres, setAllGenres] = useState([])
 
-	const result = useQuery(ALL_BOOKS,
-		{
-			variables: { genre: selectedGenre },
-		})
+	const result = useQuery(ALL_BOOKS, {
+		variables: { genre: selectedGenre },
+	})
 
 	useEffect(() => {
 		if (result.data) {
@@ -30,6 +29,9 @@ const Books = () => {
 
 	const handleGenreClick = (genre) => {
 		setSelectedGenre(genre)
+	}
+	const handleShowAll = () => {
+		setSelectedGenre('')
 	}
 
 	console.log(selectedGenre)
@@ -59,7 +61,9 @@ const Books = () => {
 					<button key={genre} onClick={() => handleGenreClick(genre)}>
 						{genre}
 					</button>
+
 				))}
+				<button onClick={handleShowAll}>Show All</button>
 			</div>
 		</div>
 	)
