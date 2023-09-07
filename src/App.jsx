@@ -45,8 +45,14 @@ const App = () => {
       <div>
         <Link style={padding} to="/">authors</Link>
         <Link style={padding} to="/books">books</Link>
-        <Link style={padding} to="/add">add book</Link>
-        <Link style={padding} to="/login">login</Link>
+        {token ? (
+          <>
+            <Link style={padding} to="/add">add book</Link>
+            <button onClick={() => setToken(null)}>Logout</button>
+          </>
+        ) : (
+          <Link style={padding} to="/login">login</Link>
+        )}
       </div>
 
       <Routes>
