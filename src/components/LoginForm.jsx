@@ -21,7 +21,7 @@ const LoginForm = ({ setError, setToken }) => {
 		if (result.data) {
 			const token = result.data.login.value
 			setToken(token)
-			localStorage.setItem('phonenumbers-user-token', token)
+			localStorage.setItem('library-user-token', token)
 			navigate('/')
 		}
 	}, [result.data]) // eslint-disable-line
@@ -48,7 +48,7 @@ const LoginForm = ({ setError, setToken }) => {
 						onChange={({ target }) => setPassword(target.value)}
 					/>
 				</div>
-				<button type='submit'>login</button>
+				<button className="button-login " type='submit'>login</button>
 			</form>
 		</div>
 	)

@@ -60,5 +60,61 @@ label {
 }
 
 .genre-button:hover {
+	background-color: #096bd4fa;
+}
+
+/* buttons for links*/
+
+.button-link {
+	display: inline-block;
+	padding: 10px 20px;
+	margin: 5px;
+	text-decoration: none;
+	background-color: #386496;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	font-size: 16px;
+}
+
+.button-logout {
+	display: inline-block;
+	padding: 5px 5px;
+	margin: 5px;
+	text-decoration: none;
+	background-color: #f36850;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	font-size: 16px;
+}
+
+.button-login {
+	display: inline-block;
+	padding: 5px 5px;
+	margin: 5px;
+	text-decoration: none;
+	background-color: #334a45;
+	color: #fff;
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+	text-align: center;
+	font-size: 16px;
+}
+
+.button-link:hover {
 	background-color: #0056b3;
+}
+
+.button-logout:hover {
+	background-color: #f33b1b;
+}
+
+.button-login:hover {
+	background-color: #0f5127;
 }

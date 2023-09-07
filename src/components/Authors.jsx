@@ -4,13 +4,16 @@ import Select from 'react-select' // Import react-select
 import { UPDATE_AUTHOR, ALL_AUTHORS } from '../queries'
 
 
-const Authors = ({ authors }) => {
-	const [selectedAuthor, setSelectedAuthor] = useState(null) // State for selected author
+const Authors = ({ authors, setError, token }) => {
+	const [selectedAuthor, setSelectedAuthor] = useState(null)
 	console.log(selectedAuthor)
 	const [birthYear, setBirthYear] = useState('')
 
 	const [updateAuthor] = useMutation(UPDATE_AUTHOR, {
-		refetchQueries: [{ query: ALL_AUTHORS }]
+		refetchQueries: [{ query: ALL_AUTHORS }],
+		onError: (error) => {
+			setError(error.graphQLErrors[0].message)
+		}
 	}
 	)
 
@@ -51,34 +54,36 @@ const Authors = ({ authors }) => {
 					))}
 				</tbody>
 			</table>
-			<div>
-				<form onSubmit={submit} className="form-container">
-					<h3>Set BirthYear</h3>
-					<div className="form-group">
-						<label>Select an author:</label>
-						<Select
-							options={authorOptions}
-							value={selectedAuthor}
-							onChange={selectedOption => setSelectedAuthor(selectedOption)}
-							placeholder="Select an author"
-							className="select-input"
-						/>
-					</div>
-					<div className="form-group">
-						<label htmlFor="birthYear">Born:</label>
-						<input
-							type="number"
-							id="birthYear"
-							value={birthYear}
-							onChange={({ target }) => setBirthYear(Number(target.value))}
-							className="birth-input"
-						/>
-					</div>
-					<button type="submit" className="submit-button">Update Author</button>
-				</form>
-			</div>
-
+			{token &&
+				<div>
+					<form onSubmit={submit} className="form-container">
+						<h3>Set BirthYear</h3>
+						<div className="form-group">
+							<label>Select an author:</label>
+							<Select
+								options={authorOptions}
+								value={selectedAuthor}
+								onChange={selectedOption => setSelectedAuthor(selectedOption)}
+								placeholder="Select an author"
+								className="select-input"
+							/>
+						</div>
+						<div className="form-group">
+							<label htmlFor="birthYear">Born:</label>
+							<input
+								type="number"
+								id="birthYear"
+								value={birthYear}
+								onChange={({ target }) => setBirthYear(Number(target.value))}
+								className="birth-input"
+							/>
+						</div>
+						<button type="submit" className="submit-button">Update Author</button>
+					</form>
+				</div>
+			}
 		</div>
+
 	)
 }
 

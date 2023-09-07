@@ -39,26 +39,28 @@ const App = () => {
       setErrorMessage(null)
     }, 10000)
   }
-  console.log(token)
+  console.log(errorMessage)
   return (
     <Router>
       <div>
-        <Link style={padding} to="/">authors</Link>
-        <Link style={padding} to="/books">books</Link>
+        <Notify errorMessage={errorMessage} />
+        <Link className="button-link" style={padding} to="/">authors</Link>
+        <Link className="button-link" style={padding} to="/books">books</Link>
         {token ? (
           <>
-            <Link style={padding} to="/add">add book</Link>
-            <button onClick={() => setToken(null)}>Logout</button>
+            <Link className="button-link" style={padding} to="/add">add book</Link>
+            <button className="button-logout" onClick={() => setToken(null)}>logout</button>
           </>
         ) : (
-          <Link style={padding} to="/login">login</Link>
+          <Link className="button-link" style={padding} to="/login">login</Link>
         )}
       </div>
 
       <Routes>
+
         <Route path="/add" element={<NewBook authors={result.data.allAuthors} />} />
-        <Route path="/books" element={<Books />} />
-        <Route path="/" element={<Authors authors={result.data.allAuthors} />} />
+        <Route path="/books" element={<Books authors={result.data.allAuthors} />} />
+        <Route path="/" element={<Authors authors={result.data.allAuthors} setError={notify} token={token} />} />
         <Route path="/login" element={<LoginForm setToken={setToken}
           setError={notify} />} />
       </Routes>

@@ -1,36 +1,57 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
-import Select from 'react-select'
+import { useNavigate } from 'react-router-dom'
+import Select from 'react-select' // Import react-select
 import { ADD_BOOK, ALL_BOOKS } from '../queries'
 
-const NewBook = (props) => {
+const NewBook = ({ authors }) => {
 	const [title, setTitle] = useState('')
 	const [author, setAuthor] = useState('')
+	const [selectedAuthor, setSelectedAuthor] = useState(null)
 	const [published, setPublished] = useState('')
 	const [genre, setGenre] = useState('')
 	const [genres, setGenres] = useState([])
 
 	const [createBook] = useMutation(ADD_BOOK, {
-		refetchQueries: [{ query: ALL_BOOKS }]
+		/* refetchQueries: [{ query: ALL_BOOKS }] */
+		update: (cache, response) => {
+			cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
+				return {
+					allBooks: allBooks.concat(response.data.addBook),
+				}
+			})
+		},
 	}
 	)
-
+	const navigate = useNavigate()
+	console.log(selectedAuthor)
 	const submit = async (event) => {
 		event.preventDefault()
 
-		console.log('add book...')
-		createBook({ variables: { title, author, published, genres } })
+		createBook({
+			variables: {
+				title, published, genres,
+				author: selectedAuthor ? selectedAuthor.value : author
+			}
+		})
 		setTitle('')
 		setPublished('')
 		setAuthor('')
 		setGenres([])
 		setGenre('')
+		navigate('/books')
 	}
 
 	const addGenre = () => {
 		setGenres(genres.concat(genre))
 		setGenre('')
 	}
+
+	const authorOptions = authors.map(author => ({
+		value: author.name,
+		label: author.name
+	}))
+
 
 	return (
 		<div>
@@ -43,7 +64,15 @@ const NewBook = (props) => {
 					/>
 				</div>
 				<div className="form-group">
-					<label>Author:</label>
+					<label>Select an existing author:</label>
+					<Select
+						options={authorOptions}
+						value={selectedAuthor}
+						onChange={selectedOption => setSelectedAuthor(selectedOption)}
+						placeholder="Select an author"
+						className="select-input"
+					/>
+					<label> or add new:</label>
 					<input
 						value={author}
 						onChange={({ target }) => setAuthor(target.value)}
