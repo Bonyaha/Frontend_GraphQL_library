@@ -9,6 +9,7 @@ import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
 import LoginForm from './components/LoginForm'
+import Recommendations from './components/Recommendatins'
 
 const Notify = ({ errorMessage }) => {
   if (!errorMessage) { return null }
@@ -39,13 +40,14 @@ const App = () => {
       setErrorMessage(null)
     }, 10000)
   }
-  console.log(errorMessage)
+  console.log(token)
   return (
     <Router>
       <div>
         <Notify errorMessage={errorMessage} />
         <Link className="button-link" style={padding} to="/">authors</Link>
         <Link className="button-link" style={padding} to="/books">books</Link>
+        <Link className="button-link" style={padding} to="/recommend">recommend</Link>
         {token ? (
           <>
             <Link className="button-link" style={padding} to="/add">add book</Link>
@@ -63,6 +65,7 @@ const App = () => {
         <Route path="/" element={<Authors authors={result.data.allAuthors} setError={notify} token={token} />} />
         <Route path="/login" element={<LoginForm setToken={setToken}
           setError={notify} />} />
+        <Route path="/recommend" element={<Recommendations token={token} />} />
       </Routes>
     </Router>
 

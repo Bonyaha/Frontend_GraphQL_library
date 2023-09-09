@@ -1,8 +1,10 @@
 import { useState } from 'react'
 import { useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
+import { useQuery } from '@apollo/client'
 import Select from 'react-select' // Import react-select
-import { ADD_BOOK, ALL_BOOKS } from '../queries'
+import { ADD_BOOK } from '../queries'
+import { ALL_BOOKS } from '../queries'
 
 const NewBook = ({ authors }) => {
 	const [title, setTitle] = useState('')
@@ -13,16 +15,23 @@ const NewBook = ({ authors }) => {
 	const [genres, setGenres] = useState([])
 
 	const [createBook] = useMutation(ADD_BOOK, {
-		/* refetchQueries: [{ query: ALL_BOOKS }] */
+		//refetchQueries: [{ query: ALL_BOOKS }]
 		update: (cache, response) => {
+			console.log(response)
 			cache.updateQuery({ query: ALL_BOOKS }, ({ allBooks }) => {
+				console.log(allBooks)
 				return {
 					allBooks: allBooks.concat(response.data.addBook),
 				}
 			})
 		},
+		/* update: () => {
+			// Return undefined for now
+			return undefined
+		}, */
 	}
 	)
+
 	const navigate = useNavigate()
 	console.log(selectedAuthor)
 	const submit = async (event) => {
@@ -39,7 +48,7 @@ const NewBook = ({ authors }) => {
 		setAuthor('')
 		setGenres([])
 		setGenre('')
-		navigate('/books')
+		//navigate('/books')
 	}
 
 	const addGenre = () => {

@@ -118,3 +118,16 @@ label {
 .button-login:hover {
 	background-color: #0f5127;
 }
+
+
+/* style for buttons for filtering in Books */
+
+/* Highlighted button style */
+.selected {
+	background-color: #007bff;
+	/* Change this color to your preferred highlight color */
+	color: #fff;
+	/* Text color for highlighted button */
+	font-weight: bold;
+	/* Bold text for highlighted button */
+}
