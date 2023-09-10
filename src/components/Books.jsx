@@ -2,13 +2,14 @@ import { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { ALL_BOOKS } from '../queries'
 
+
 const Books = ({ authors }) => {
 	const [selectedGenre, setSelectedGenre] = useState('')
 	const [selectedAuthor, setSelectedAuthor] = useState('')
 	const [allGenres, setAllGenres] = useState([])
 	const [allAuthors, setAllAuthors] = useState([])
 
-	console.log(authors)
+
 	const result = useQuery(ALL_BOOKS, {
 		variables: { genre: selectedGenre, author: selectedAuthor },
 	})

@@ -45,8 +45,8 @@ const App = () => {
     <Router>
       <div>
         <Notify errorMessage={errorMessage} />
-        <Link className="button-link" style={padding} to="/">authors</Link>
-        <Link className="button-link" style={padding} to="/books">books</Link>
+        <Link className="button-link" style={padding} to="/">books</Link>
+        <Link className="button-link" style={padding} to="/authors">authors</Link>
         <Link className="button-link" style={padding} to="/recommend">recommend</Link>
         {token ? (
           <>
@@ -60,9 +60,9 @@ const App = () => {
 
       <Routes>
 
-        <Route path="/add" element={<NewBook authors={result.data.allAuthors} />} />
-        <Route path="/books" element={<Books authors={result.data.allAuthors} />} />
-        <Route path="/" element={<Authors authors={result.data.allAuthors} setError={notify} token={token} />} />
+        <Route path="/add" element={<NewBook authors={result.data.allAuthors} token={token} />} />
+        <Route path="/" element={<Books authors={result.data.allAuthors} />} />
+        <Route path="/authors" element={<Authors authors={result.data.allAuthors} setError={notify} token={token} />} />
         <Route path="/login" element={<LoginForm setToken={setToken}
           setError={notify} />} />
         <Route path="/recommend" element={<Recommendations token={token} />} />
