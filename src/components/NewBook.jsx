@@ -13,19 +13,19 @@ const NewBook = ({ authors, token }) => {
 	const [genre, setGenre] = useState('')
 	const [genres, setGenres] = useState([])
 
-
+	//for testing purposes, it shows the cache
 	const client = useApolloClient()
 	const cacheData = client.extract()
 	console.log(cacheData)
 
 
 	const [createBook] = useMutation(ADD_BOOK, {
-		//refetchQueries: [{ query: ALL_BOOKS }]
+		/* refetchQueries: [{ query: ALL_BOOKS, variables: { genre: '', author: '' } }] */
 		update: (cache, response) => {
 			console.log(cache)
 			cache.updateQuery({
 				query: ALL_BOOKS,
-				variables: { author: '', genre: '' },
+				variables: { genre: '', author: '' },
 			}, ({ allBooks }) => {
 				console.log(allBooks)
 				return {
