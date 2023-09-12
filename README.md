@@ -23,3 +23,5 @@ As for the question about "Why result.refetch is working, and refetchQueries in 
 		refetchQueries in useQuery is typically used when you have a mutation that affects multiple queries, and you want to specify which queries should be refetched after the mutation. It's not used to trigger a refetch of the current query defined by useQuery
 So, here in my situation, refetchQueries in useQuery is useless for filtering purposes
 Also, I noticed, that sometimes when filtering on different genres and authors occurs, it shows only filtered books despite that I press Show all button - it change the show all list to previously selected button even so I didn't press it again. It's strange. But it happens seldom. This happens with refetch method.
+
+It's important to use in NewBook component the same structure for updateQuery as in Books component in useQuery: if we use in useQuery variables: { genre: selectedGenre, author: selectedAuthor }, then we must use variables: { genre: '', author: '' } in updateQuery in NewBook component. 
