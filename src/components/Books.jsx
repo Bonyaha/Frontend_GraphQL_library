@@ -1,7 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useQuery } from '@apollo/client'
 import { ALL_BOOKS } from '../queries'
-import { useApolloClient } from '@apollo/client'
 
 const Books = ({ authors }) => {
 	const [selectedGenre, setSelectedGenre] = useState('')
@@ -10,28 +9,12 @@ const Books = ({ authors }) => {
 	const [allAuthors, setAllAuthors] = useState([])
 
 
-	const client = useApolloClient()
-	/* const cacheData = client.extract()
-	console.log(cacheData) */
-
-
-	/* const result = useQuery(ALL_BOOKS, {
+	const result = useQuery(ALL_BOOKS, {
 		variables: { genre: selectedGenre, author: selectedAuthor },
-		onCompleted: (data) => {
+		onCompleted: (data) => { //for testing purpose
 			console.log('I am inside useQuery')
 			console.log(data)
 		}
-	}) */
-	const result = useQuery(ALL_BOOKS, {
-		variables: { genre: selectedGenre, author: selectedAuthor },/*
-		refetchQueries: () => ({
-			query: ALL_BOOKS,
-			variables: { genre: selectedGenre, author: selectedAuthor },
-		}),
-		onCompleted: (data) => {
-			console.log('I am inside useQuery')
-			console.log(data)
-		}*/
 	})
 	/* we use Set to ensure we have a unique list of genres, and we use flatMap to flatten nested arrays of genres from each book into a single flat array of genres for all books. */
 	useEffect(() => {
@@ -40,7 +23,6 @@ const Books = ({ authors }) => {
 			const books = result.data.allBooks
 			const genres = [...new Set(books.flatMap((book) => book.genres))]
 			const allAuthors = [...new Set(authors.map((author) => author.name))]
-			//console.log(allAuthors)
 			setAllGenres(genres)
 			setAllAuthors(allAuthors)
 		}
@@ -62,6 +44,7 @@ const Books = ({ authors }) => {
 	}
 	const handleAuthorClick = (author) => {
 		setSelectedAuthor(author)
+		result.refetch({ genre: selectedGenre, author })
 	}
 	const handleShowAllAuthors = () => {
 		setSelectedAuthor('')

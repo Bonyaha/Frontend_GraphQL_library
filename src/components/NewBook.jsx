@@ -5,7 +5,7 @@ import Select from 'react-select' // Import react-select
 import { ADD_BOOK, ALL_BOOKS } from '../queries'
 import { useApolloClient } from '@apollo/client'
 
-const NewBook = ({ authors, token }) => {
+const NewBook = ({ authors, token, setError }) => {
 	const [title, setTitle] = useState('')
 	const [author, setAuthor] = useState('')
 	const [selectedAuthor, setSelectedAuthor] = useState(null)
@@ -20,6 +20,10 @@ const NewBook = ({ authors, token }) => {
 
 
 	const [createBook] = useMutation(ADD_BOOK, {
+		onError: (error) => {
+			const messages = error.graphQLErrors[0].message
+			setError(messages)
+		},
 		/* refetchQueries: [{ query: ALL_BOOKS, variables: { genre: '', author: '' } }] */
 		update: (cache, response) => {
 			console.log(cache)
