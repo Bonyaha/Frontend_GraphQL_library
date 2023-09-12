@@ -33,7 +33,6 @@ const Books = ({ authors }) => {
 		return <div>loading...</div>
 	}
 	//console.log(result.data.allBooks)
-	const books = result.data.allBooks
 
 	const handleGenreClick = (genre) => {
 		setSelectedGenre(genre)
@@ -49,6 +48,7 @@ const Books = ({ authors }) => {
 	const handleShowAllAuthors = () => {
 		setSelectedAuthor('')
 	}
+	const books = result.data.allBooks
 
 	return (
 		<div>
