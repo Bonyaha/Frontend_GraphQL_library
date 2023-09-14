@@ -77,5 +77,29 @@ export const USER = gql`
     id
   }
 }
-
+`
+export const BOOK_ADDED = gql`
+  subscription {
+    bookAdded {
+      
+    title
+    author {
+      name
+      books {
+        title
+        published
+        id
+        genres
+      }
+      id
+      born
+      bookCount
+    }
+    published
+    id
+    genres
+  }
+    
+  }
+ 
 `

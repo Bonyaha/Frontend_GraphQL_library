@@ -1,11 +1,15 @@
 import React from 'react'
 import ReactDOM from 'react-dom/client'
-import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink } from '@apollo/client'
+import { ApolloClient, InMemoryCache, ApolloProvider, createHttpLink, split } from '@apollo/client'
 import { setContext } from '@apollo/client/link/context'
 import App from './App.jsx'
 import './style.css'
 
-/* authLink is a function that creates an Apollo Link responsible for modifying request headers to add an authorization token, making it act like a middleware for authentication. */
+import { getMainDefinition } from '@apollo/client/utilities'
+import { GraphQLWsLink } from '@apollo/client/link/subscriptions'
+import { createClient } from 'graphql-ws'
+
+
 const authLink = setContext((_, { headers }) => {
   const token = localStorage.getItem('library-user-token')
   return {
@@ -18,9 +22,17 @@ const authLink = setContext((_, { headers }) => {
 const httpLink = createHttpLink({
   uri: 'http://localhost:4000',
 })
-/* When you use authLink.concat(httpLink), you are creating a chain of Apollo Links. This means that when a GraphQL request is made, it first passes through authLink, which modifies the request headers to include authentication information if necessary. Then, the request is passed to httpLink, which handles the actual HTTP communication with your GraphQL server. */
+const wsLink = new GraphQLWsLink(createClient({ url: 'ws://localhost:4000' }))
+
+const splitLink = split(({ query }) => {
+  const definition = getMainDefinition(query)
+  return (definition.kind === 'OperationDefinition' && definition.operation === 'subscription')
+},
+  wsLink, authLink.concat(httpLink)
+)
+
 const client = new ApolloClient({
-  link: authLink.concat(httpLink),
+  link: splitLink,
   cache: new InMemoryCache(),
 })
 
