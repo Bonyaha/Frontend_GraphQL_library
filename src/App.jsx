@@ -1,10 +1,10 @@
 import { useState } from 'react'
-import { useQuery } from '@apollo/client'
+import { useQuery, useApolloClient } from '@apollo/client'
 import {
   BrowserRouter as Router,
   Routes, Route, Link
 } from 'react-router-dom'
-import { ALL_AUTHORS, BOOK_ADDED } from './queries'
+import { ALL_AUTHORS, BOOK_ADDED, ALL_BOOKS } from './queries'
 import Authors from './components/Authors'
 import Books from './components/Books'
 import NewBook from './components/NewBook'
@@ -21,16 +21,37 @@ const Notify = ({ errorMessage }) => {
   )
 }
 
+// function that takes care of manipulating cache
+export const updateCache = (cache, query, addedBook) => {  // helper that is used to eliminate saving same person twice
+  const uniqByName = (a) => {
+    let seen = new Set()
+    return a.filter((item) => {
+      let k = item.title
+      return seen.has(k) ? false : seen.add(k)
+    })
+  }
+  cache.updateQuery(query, ({ allBooks }) => {
+    return {
+      allBooks: uniqByName(allBooks.concat(addedBook)),
+    }
+  })
+}
 
 const App = () => {
   const [errorMessage, setErrorMessage] = useState(null)
   const [token, setToken] = useState(null)
   const result = useQuery(ALL_AUTHORS)
-
+  const client = useApolloClient()
 
   useSubscription(BOOK_ADDED, {
     onData: ({ data }) => {
-      console.log(data)
+      const addedBook = data.data.bookAdded
+      notify(`${addedBook.title} added`)
+
+      updateCache(client.cache, {
+        query: ALL_BOOKS,
+        variables: { genre: '', author: '' },
+      }, addedBook)
     }
   })
 
@@ -49,7 +70,7 @@ const App = () => {
       setErrorMessage(null)
     }, 10000)
   }
-  console.log(token)
+
   return (
     <Router>
       <div>

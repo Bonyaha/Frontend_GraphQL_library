@@ -10,16 +10,11 @@ const Books = ({ authors }) => {
 
 
 	const result = useQuery(ALL_BOOKS, {
-		variables: { genre: selectedGenre, author: selectedAuthor },
-		onCompleted: (data) => { //for testing purpose
-			console.log('I am inside useQuery')
-			console.log(data)
-		}
+		variables: { genre: selectedGenre, author: selectedAuthor }
 	})
-	/* we use Set to ensure we have a unique list of genres, and we use flatMap to flatten nested arrays of genres from each book into a single flat array of genres for all books. */
+
 	useEffect(() => {
 		if (result.data) {
-			console.log('Test inside useEffect')
 			const books = result.data.allBooks
 			const genres = [...new Set(books.flatMap((book) => book.genres))]
 			const allAuthors = [...new Set(authors.map((author) => author.name))]
@@ -28,7 +23,7 @@ const Books = ({ authors }) => {
 		}
 	}, [])
 
-	console.log("Test after useEffect")
+
 	if (result.loading) {
 		return <div>loading...</div>
 	}
