@@ -12,7 +12,7 @@ const Books = ({ authors }) => {
 	const result = useQuery(ALL_BOOKS, {
 		variables: { genre: selectedGenre, author: selectedAuthor }
 	})
-
+	console.log(result)
 	useEffect(() => {
 		if (result.data) {
 			const books = result.data.allBooks

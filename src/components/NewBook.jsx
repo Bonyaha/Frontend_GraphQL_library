@@ -26,7 +26,6 @@ const NewBook = ({ authors, token, setError }) => {
 			const messages = error.graphQLErrors[0]?.message
 			setError(messages)
 		},
-
 		update: (cache, response) => {
 			console.log(cache)
 			updateCache(client.cache, {

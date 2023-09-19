@@ -15,12 +15,6 @@ query ($genre: String,$author: String) {
     title
     author {
       name
-      books {
-        title
-        published
-        id
-        genres
-      }
       id
       born
       bookCount
