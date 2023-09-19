@@ -31,15 +31,8 @@ mutation createBook($title: String!, $published: Int!, $author: String!, $genres
     title  
     author {
       name
-      books {
-        title
-        published
-        id
-        genres
-      }
       id
       born
-      bookCount
     }
     published 
     id 
@@ -74,26 +67,17 @@ export const USER = gql`
 `
 export const BOOK_ADDED = gql`
   subscription {
-    bookAdded {
-      
+    bookAdded {      
     title
     author {
-      name
-      books {
-        title
-        published
-        id
-        genres
-      }
+      name      
       id
-      born
-      bookCount
+      born      
     }
     published
     id
     genres
-  }
-    
+  }    
   }
  
 `
