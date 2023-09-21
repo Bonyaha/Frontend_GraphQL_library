@@ -3,7 +3,6 @@ import { useMutation } from '@apollo/client'
 import { useNavigate } from 'react-router-dom'
 import Select from 'react-select' // Import react-select
 import { ADD_BOOK, ALL_BOOKS } from '../queries'
-import { useApolloClient } from '@apollo/client'
 import { updateCache } from '../App'
 
 const NewBook = ({ authors, token, setError }) => {
@@ -13,11 +12,6 @@ const NewBook = ({ authors, token, setError }) => {
 	const [published, setPublished] = useState('')
 	const [genre, setGenre] = useState('')
 	const [genres, setGenres] = useState([])
-
-	//for testing purposes, it shows the cache
-	/* const client = useApolloClient()
-	const cacheData = client.extract()
-	console.log("cacheData:", cacheData) */
 
 	const [createBook] = useMutation(ADD_BOOK, {
 		onError: (error) => {
