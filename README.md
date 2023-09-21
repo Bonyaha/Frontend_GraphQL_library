@@ -25,3 +25,6 @@ So, here in my situation, refetchQueries in useQuery is useless for filtering pu
 Also, I noticed, that sometimes when filtering on different genres and authors occurs, it shows only filtered books despite that I press Show all button - it change the show all list to previously selected button even so I didn't press it again. It's strange. But it happens seldom. This happens with refetch method.
 
 It's important to use in NewBook component the same structure for updateQuery as in Books component in useQuery: if we use in useQuery variables: { genre: selectedGenre, author: selectedAuthor }, then we must use variables: { genre: '', author: '' } in updateQuery in NewBook component. 
+
+
+I added addedAuthor parameter in updateCache function because we need to update ALL_AUTHORS query if we want to see updated number of books in Author view.

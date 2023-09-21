@@ -1,13 +1,14 @@
 import { useState } from 'react'
-import { useMutation } from '@apollo/client'
 import Select from 'react-select' // Import react-select
-import { UPDATE_AUTHOR, ALL_AUTHORS } from '../queries'
+import { UPDATE_AUTHOR, ALL_AUTHORS, AUTHOR_ADDED } from '../queries'
+import { useQuery, useMutation } from '@apollo/client'
 
-
-const Authors = ({ authors, setError, token }) => {
+const Authors = ({ setError, token }) => {
 	const [selectedAuthor, setSelectedAuthor] = useState(null)
 	console.log(selectedAuthor)
 	const [birthYear, setBirthYear] = useState('')
+	const result = useQuery(ALL_AUTHORS)
+	const authors = result.data.allAuthors
 
 	const [updateAuthor] = useMutation(UPDATE_AUTHOR, {
 		refetchQueries: [{ query: ALL_AUTHORS }],
@@ -17,9 +18,6 @@ const Authors = ({ authors, setError, token }) => {
 	}
 	)
 
-	const margin = {
-		margin: 5
-	}
 
 	const submit = async (event) => {
 		event.preventDefault()
