@@ -40,14 +40,18 @@ const Authors = ({ setError, token }) => {
 				<tbody>
 					<tr>
 						<th></th>
-						<th>born</th>
-						<th>books</th>
+						<th>
+							<div >born</div>
+						</th>
+						<th>
+							<div style={{ marginLeft: '5px' }}>books</div>
+						</th>
 					</tr>
 					{authors.map((a) => (
 						<tr key={a.name}>
 							<td>{a.name}</td>
 							<td>{a.born}</td>
-							<td>{a.bookCount}</td>
+							<td style={{ textAlign: 'right' }}>{a.bookCount}</td>
 						</tr>
 					))}
 				</tbody>
