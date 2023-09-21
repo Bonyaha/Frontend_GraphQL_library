@@ -1,4 +1,4 @@
-I had an issue with filtering initially, when I didn't use refetch method of useQuery. Here is what it was👇:
+I had an issue with filtering in Books component initially, when I didn't use refetch method of useQuery. Here is what it was👇:
 
 Here is the flow of actions:
 When I first log in in the app, it shows me Book component, because it's home view.
