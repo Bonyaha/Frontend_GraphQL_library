@@ -36,7 +36,7 @@ const ErrorNotification = ({ errorMessage }) => {
 
 // function that takes care of manipulating cache
 export const updateCache = (cache, query, addedBook, addedAuthor) => {
-  // helper that is used to eliminate saving same person twice
+  // helper that is used to eliminate saving same book twice
   const uniqByName = (a) => {
     let seen = new Set()
     return a.filter((item) => {
