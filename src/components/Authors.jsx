@@ -5,7 +5,6 @@ import { useQuery, useMutation } from '@apollo/client'
 
 const Authors = ({ setError, token }) => {
 	const [selectedAuthor, setSelectedAuthor] = useState(null)
-	console.log(selectedAuthor)
 	const [birthYear, setBirthYear] = useState('')
 	const result = useQuery(ALL_AUTHORS)
 	const authors = result.data.allAuthors

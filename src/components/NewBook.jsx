@@ -20,7 +20,7 @@ const NewBook = ({ authors, token, setError }) => {
 			setError(messages)
 		},
 		update: (cache, response) => {
-			console.log(cache)
+			//console.log(cache)
 			updateCache(cache, {
 				query: ALL_BOOKS,
 				variables: { genre: '', author: '' },
